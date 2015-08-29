@@ -72,9 +72,9 @@ var collision = 0;
 var addToCollision = throttle(function(){
   collision++;
   var time = 0;
-  d3.select('.gameboard').attr('color', 'maroon');
+  d3.select('.gameboard').style('background-color', 'maroon');
   setTimeout(function(){
-    d3.select('.gameboard').attr('fill', 'white');
+    d3.select('.gameboard').style('background-color', 'white');
   }, 100);
   for(var i = 0; i < 4; i ++){
     setTimeout(function(){
