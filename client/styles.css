@@ -10,6 +10,7 @@ Feel free to use it if you like. */
   height: 80vh;
   width: 80vw;
   background-color: white;
+  cursor: none;
 }
 .container {
   width: 80vw;
