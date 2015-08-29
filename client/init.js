@@ -7,7 +7,7 @@ var makeEnemies = function() {
   var boardHeight = d3.select('.gameboard').style('height');
   boardWidth = boardWidth.substring(0,boardWidth.length - 2);
   boardHeight = boardHeight.substring(0,boardHeight.length - 2);
-  for(var i=0; i<10; i++) {
+  for(var i=0; i<16; i++) {
     var x = Math.random()*(boardWidth-100);
     var y = Math.random()*(boardHeight-100);    
 
