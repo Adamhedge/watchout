@@ -3,3 +3,31 @@
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
 
+.gameboard {
+  position: relative;
+  top: 10%;
+  margin: auto;
+  height: 80vh;
+  width: 80vw;
+  background-color: white;
+}
+.container {
+  width: 80vw;
+  height: 100vh;
+  margin: auto;
+}
+body {
+  background-color: grey;
+}
+
+.scores {
+  font-family: sans-serif;
+  position: absolute;
+  top: 8.5%;
+  color: #1A2992;
+}
+
+.enemies { 
+  width: 30px;
+  height: 30px;
+}

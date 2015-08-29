@@ -4,13 +4,18 @@
     <link rel='stylesheet' type='css' href='styles.css'>
   </head>
   <body>
-    <div class="scoreboard">
-      <!-- Modify the scoreboard when important events occur in your game! -->
-      <div class="high">High score: <span>0</span></div>
-      <div class="current">Current score: <span>0</span></div>
-      <div class="collisions">Collisions: <span>0</span></div>
+    <div class="container">
+      <div class="scores">
+        <span class="high">High score: <span>0</span></span>
+        <span class="current">Current score: <span>0</span></span>
+        <span class="collisions">Collisions: <span>0</span></span>
+      </div>
+      <svg class="gameboard">
+        <!-- <image xlink:href="http://freepngimages.com/wp-content/uploads/2015/06/jay-bird-flying-624x363.png" height = '99' width = '100'></image> -->
+      </svg>
     </div>
     <script src="lib/d3.js" charset="utf-8"></script>
-    <script src='watchout.js'></script>
   </body>
+  <script src='watchout.js'></script>
+  <script src='init.js'></script>
 </html>
