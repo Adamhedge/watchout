@@ -47,12 +47,9 @@ function enemymove() {
   d3.select(this).data(makeEnemies())
     .transition()
     .delay(1000)
-    .attr('transform', 'rotate(-20)')
     .attr('x', function(d){return d[0]})
     .attr('y', function(d){return d[1]})
     .duration(3000)
-    .transition()
-    
     .each('end', enemymove);
     // .attrTween("transform", swoop);
 }

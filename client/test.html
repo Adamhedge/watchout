@@ -18,7 +18,6 @@ function cycle() {
       .ease('linear')
       .duration(2000)
       .attrTween("transform", function() { return d3.interpolateString("rotate(0)", "rotate(720)"); })
-      .each("end", cycle)
     .transition()
       .ease('linear')
       .duration(2000)
