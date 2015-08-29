@@ -69,9 +69,24 @@ var wallcollision = function(point) {
 var high = 0;
 var current = 0;
 var collision = 0;
-var addToCollision = function(){
+var addToCollision = throttle(function(){
   collision++;
-}
+  var time = 0;
+  d3.select('.gameboard').attr('color', 'maroon');
+  setTimeout(function(){
+    d3.select('.gameboard').attr('fill', 'white');
+  }, 100);
+  for(var i = 0; i < 4; i ++){
+    setTimeout(function(){
+      player.attr('visibility', 'hidden');
+    }, time);
+    time +=100;
+    setTimeout(function(){
+      player.attr('visibility', 'visible');
+    }, time);
+    time += 800
+  }
+}, 3000)
 
 setInterval(function(){
   var colliding = false;
@@ -82,27 +97,37 @@ setInterval(function(){
     var playery2 = playery1 + 55;
     if(playerx2 < (+bird.getAttribute('x')) || (+bird.getAttribute('x')+100 )< playerx1 || playery2 < +bird.getAttribute('y') || (+bird.getAttribute('y')+60) < playery1){
       current++;
-      console.log(colliding);
-      if(colliding === true){
-        colliding = false;
-      }
       high = Math.max(high, current);
       d3.selectAll('.numbers')
         .data([high, current, collision])
         .text(function(d){return d;});
     } else{
       high = Math.max(high, current);
-      console.log(colliding);
-      if(colliding === false){
-        collision++;  
-        colliding = true;
-      }
       current = 0;
+      addToCollision();
       d3.selectAll('.numbers')
         .data([high, current, collision])
         .text(function(d){return d;});
     }
   });
 }, 10);
+
+
+function throttle(func, wait) {
+  var alreadyCalled = false;
+  var result;
+
+   return function() {
+    if (!alreadyCalled) {
+      result = func.apply(this, arguments);
+      alreadyCalled = true;
+      setTimeout(function() { 
+        alreadyCalled = false; 
+        return alreadyCalled
+      }, wait);
+    }
+  }
+};
+
 
 //blood! path: 'm-7.5,1.62413c0,-5.04095 4.08318,-9.12413 9.12414,-9.12413c5.04096,0 9.70345,5.53145 11.87586,9.12413c-2.02759,2.72372 -6.8349,9.12415 -11.87586,9.12415c-5.04096,0 -9.12414,-4.08318 -9.12414,-9.12415z'
