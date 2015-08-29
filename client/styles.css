@@ -5,7 +5,6 @@ Feel free to use it if you like. */
 
 .gameboard {
   position: relative;
-  top: 25px;
   margin: auto;
   height: 80vh;
   width: 80vw;
@@ -23,8 +22,7 @@ body {
 
 .scores {
   font-family: sans-serif;
-  position: absolute;
-  top: 8.5%;
+  position: relative;
   color: #1A2992;
 }
 

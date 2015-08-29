@@ -7,14 +7,18 @@ var makeEnemies = function() {
   var boardHeight = d3.select('.gameboard').style('height');
   boardWidth = boardWidth.substring(0,boardWidth.length - 2);
   boardHeight = boardHeight.substring(0,boardHeight.length - 2);
-  for(var i=0; i<16; i++) {
+  for(var i=0; i<10; i++) {
     var x = Math.random()*(boardWidth-100);
-    var y = Math.random()*(boardHeight-100);    
+    var y = Math.random()*(boardHeight-60);    
 
     enemies.push([x,y])  
   }
   return enemies;
 }
+
+d3.select('svg')
+  .style('background', 'url(http://wallpaperose.com/wp-content/uploads/2013/04/Rainbow-Orange-Background.jpg)')
+  .style('background-size', '100% 100%')
 
 var enemy = d3.select('.gameboard')
   .selectAll('image')
@@ -26,7 +30,8 @@ var enemy = d3.select('.gameboard')
   .attr('class', 'enemy')
   .attr('xlink:href', 'http://freepngimages.com/wp-content/uploads/2015/06/jay-bird-flying-624x363.png')
   .attr('height', 60)
-  .attr('width', 100);
+  .attr('width', 100)
+  .each(enemymove);
 
 var player = d3.select('.gameboard')
   .append('image')
@@ -38,14 +43,24 @@ var player = d3.select('.gameboard')
   .attr('padding', 50)
   .attr('class', 'player');
 
-setInterval(function() {
-  enemy.data(makeEnemies())
+function enemymove() {
+  d3.select(this).data(makeEnemies())
     .transition()
-    .duration(3000)
+    .delay(1000)
+    .attr('transform', 'rotate(-20)')
     .attr('x', function(d){return d[0]})
     .attr('y', function(d){return d[1]})
-  }, 3000
-)
+    .duration(3000)
+    .transition()
+    
+    .each('end', enemymove);
+    // .attrTween("transform", swoop);
+}
+
+// function swoop(d, i, a) {
+//   return d3.interpolateString("rotate(-60, 0, 0)", "rotate(60, 0, 0)");
+// }
+
 
 d3.select("body").select("svg").on('mousemove', function() {
   var pt = d3.mouse(this);
@@ -66,27 +81,37 @@ var wallcollision = function(point) {
   return false;
 }
 
-var high = 0;
-var current = 0;
-var collision = 0;
 var addToCollision = throttle(function(){
   collision++;
   var time = 0;
-  d3.select('.gameboard').style('background-color', 'maroon');
-  setTimeout(function(){
-    d3.select('.gameboard').style('background-color', 'white');
-  }, 100);
-  for(var i = 0; i < 4; i ++){
-    setTimeout(function(){
-      player.attr('visibility', 'hidden');
-    }, time);
-    time +=100;
-    setTimeout(function(){
-      player.attr('visibility', 'visible');
-    }, time);
-    time += 800
+  d3.select('.gameboard')
+    .append('rect')
+    .attr('width', '100%')
+    .attr('height', '100%')
+    .style("fill", "maroon") 
+    .style("fill-opacity", '40%')
+    .transition()
+    .duration(110)
+     // .ease('linear')
+    .remove()
+  for(var i=0; i<4; i++) {
+    console.log(time, i)
+    setTimeout(function() {
+      player.attr('visibility', 'hidden')
+        .transition()
+        .delay(100)
+        .attr('visibility', 'visible')
+        .delay(100)  
+      }, time)
+    time += 600;   
   }
-}, 3000)
+}, 2200)
+
+
+var high = 0;
+var current = 0;
+var collision = 0;
+var currentwithoutmod = 0;
 
 setInterval(function(){
   var colliding = false;
@@ -96,14 +121,14 @@ setInterval(function(){
     var playerx2 = playerx1 + 75;
     var playery2 = playery1 + 55;
     if(playerx2 < (+bird.getAttribute('x')) || (+bird.getAttribute('x')+100 )< playerx1 || playery2 < +bird.getAttribute('y') || (+bird.getAttribute('y')+60) < playery1){
-      current++;
+      currentwithoutmod++; current=Math.floor((currentwithoutmod+1)/1000);
       high = Math.max(high, current);
       d3.selectAll('.numbers')
         .data([high, current, collision])
         .text(function(d){return d;});
     } else{
       high = Math.max(high, current);
-      current = 0;
+      currentwithoutmod = 0;
       addToCollision();
       d3.selectAll('.numbers')
         .data([high, current, collision])
