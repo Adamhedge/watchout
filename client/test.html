@@ -14,15 +14,9 @@ svg.append("g")
     .attr("d", d3.svg.symbol().type("cross").size(10000))
     .each(cycle);
 function cycle() {
-  d3.select(this).transition()
-      .ease('linear')
-      .duration(2000)
-      .attrTween("transform", function() { return d3.interpolateString("rotate(0)", "rotate(720)"); })
-    .transition()
-      .ease('linear')
-      .duration(2000)
-      .attr('x', 0)
-      .attrTween("transform", function() { return d3.interpolateString("translate(0,0)", "translate(100,100)"); })
-      .each("end", cycle);
-}
+   d3.select(this).transition().transform()
+          .translate(200, 100)
+          .rotate(-45)
+          .translate(-d3.select(this).attr("width")/2, -d3.select(this).attr("height")/2)()
+    }
 </script>

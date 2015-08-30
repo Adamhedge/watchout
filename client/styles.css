@@ -19,16 +19,15 @@ Feel free to use it if you like. */
 body {
   background-color: grey;
 }
-
 .scores {
   font-family: sans-serif;
   position: relative;
   color: #1A2992;
 }
 
-.enemies { 
-  width: 30px;
-  height: 30px;
+.flip {
+  /*-webkit-transform: rotateY(180deg); /* Safari */*/
+  /*transform: rotateY(180deg);*/
 }
 
 .title {
